@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RP_DeleteAccountRequest extends StringRequest {
-    private static final String URL = "https://192.168.0.12:443/DeleteAccount.php"; // 수정 필요한 주소
+    private static final String URL = "https://192.168.0.5:443/DeleteAccount.php"; // 수정 필요한 주소
     private final Map<String, String> params;
 
     public RP_DeleteAccountRequest(String userIDToDelete, Response.Listener<String> listener, Response.ErrorListener errorListener, Context context) {

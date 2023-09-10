@@ -23,7 +23,7 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocketFactory;
 
 public class RP_SavePaymentRequest extends StringRequest{
-    final static private String URL = "https://192.168.0.12:443/RP_SavePayment.php";
+    final static private String URL = "https://192.168.0.5:443/RP_SavePayment.php";
     private Map<String ,String > map;
 
     public RP_SavePaymentRequest(String userID, String product, String unitPrice, Response.Listener<String> listener, Context context) throws CertificateException, IOException, KeyStoreException, NoSuchAlgorithmException, KeyManagementException {

@@ -25,7 +25,7 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocketFactory;
 
 public class RP_FIDORegisterRequest extends StringRequest {
-    final static private String URL = "https://192.168.0.12:443/FIDORegisterRequest.php";
+    final static private String URL = "https://192.168.0.5:443/FIDORegisterRequest.php";
 
     private Map<String ,String > map;
 

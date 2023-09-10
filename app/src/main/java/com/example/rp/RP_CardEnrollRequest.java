@@ -25,7 +25,7 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocketFactory;
 
 public class RP_CardEnrollRequest extends StringRequest {
-    final static private String URL = "https://192.168.0.12:443/RP_CardEnroll.php";
+    final static private String URL = "https://192.168.0.5:443/RP_CardEnroll.php";
     private Map<String ,String > map;
 
     public RP_CardEnrollRequest(String userID, String c_num, String c_cvc, String c_date, String c_pw, Response.Listener<String> listener, Context context) throws CertificateException, IOException, KeyStoreException, NoSuchAlgorithmException, KeyManagementException {

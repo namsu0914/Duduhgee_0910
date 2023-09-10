@@ -20,6 +20,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
+
 public class RP_PayDetailActivity extends AppCompatActivity {
 
     private Button btn_info;
@@ -35,6 +41,15 @@ public class RP_PayDetailActivity extends AppCompatActivity {
 
         btn_home = findViewById(R.id.btn_home);
         btn_info = findViewById(R.id.btn_info);
+
+        tv_product1 = findViewById(R.id.tv_product1);
+        tv_amount1 = findViewById(R.id.tv_amount1);
+        tv_unitprice1 = findViewById(R.id.tv_unitprice1);
+        tv_totalprice1 = findViewById(R.id.tv_totalprice1);
+        tv_product2 = findViewById(R.id.tv_product2);
+        tv_amount2 = findViewById(R.id.tv_amount2);
+        tv_unitprice2 = findViewById(R.id.tv_unitprice2);
+        tv_totalprice2 = findViewById(R.id.tv_totalprice2);
 
         tv_id = findViewById(R.id.tv_id);
 
@@ -69,14 +84,53 @@ public class RP_PayDetailActivity extends AppCompatActivity {
 
         tv_id.setText(userId);
 
-        tv_product1 = findViewById(R.id.tv_product1);
-        tv_amount1 = findViewById(R.id.tv_amount1);
-        tv_unitprice1 = findViewById(R.id.tv_unitprice1);
-        tv_totalprice1 = findViewById(R.id.tv_totalprice1);
-        tv_product2 = findViewById(R.id.tv_product2);
-        tv_amount2 = findViewById(R.id.tv_amount2);
-        tv_unitprice2 = findViewById(R.id.tv_unitprice2);
-        tv_totalprice2 = findViewById(R.id.tv_totalprice2);
+        Response.Listener<String> responseListner = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    //JSONObject jsonObject = new JSONObject(response);
+                    JSONArray jsonarray = new JSONArray(response);
+                    for(int i=0; i < jsonarray.length(); i++) {
+                        JSONObject jsonobject = jsonarray.getJSONObject(i);
+                        String product       = jsonobject.getString("product");
+                        String amount    = jsonobject.getString("amount");
+                        String unitPrice  = jsonobject.getString("unitPrice");
+                        String totalPrice = jsonobject.getString("totalPrice");
+                        if(i==0){
+                            tv_product1.setText(product);
+                            tv_amount1.setText(amount);
+                            tv_unitprice1.setText(unitPrice);
+                            tv_totalprice1.setText(totalPrice);
+                        }else{
+                            tv_product2.setText(product);
+                            tv_amount2.setText(amount);
+                            tv_unitprice2.setText(unitPrice);
+                            tv_totalprice2.setText(totalPrice);
+                        }
+
+                    }
+
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+        RP_PaymentDetailRequest paymentDetailRequest = null;
+        try {
+            paymentDetailRequest = new RP_PaymentDetailRequest(userId,responseListner, RP_PayDetailActivity.this);
+        } catch (CertificateException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (KeyStoreException e) {
+            throw new RuntimeException(e);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        } catch (KeyManagementException e) {
+            throw new RuntimeException(e);
+        }
+        RequestQueue queue = Volley.newRequestQueue(RP_PayDetailActivity.this);
+        queue.add(paymentDetailRequest);
 
 
         TextView textPay = findViewById(R.id.text_pay);
@@ -105,37 +159,5 @@ public class RP_PayDetailActivity extends AppCompatActivity {
             }
         });
 
-        Response.Listener<String> responseListener = new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONArray jsonArray = new JSONArray(response);
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        String product = jsonObject.getString("product");
-                        String amount = jsonObject.getString("amount");
-                        String unitPrice = jsonObject.getString("unitPrice");
-                        String totalPrice = jsonObject.getString("totalPrice");
-                        if (i == 0) {
-                            tv_product1.setText(product);
-                            tv_amount1.setText(amount);
-                            tv_unitprice1.setText(unitPrice);
-                            tv_totalprice1.setText(totalPrice);
-                        } else {
-                            tv_product2.setText(product);
-                            tv_amount2.setText(amount);
-                            tv_unitprice2.setText(unitPrice);
-                            tv_totalprice2.setText(totalPrice);
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-
-        RP_PaymentDetailRequest paymentDetailRequest = new RP_PaymentDetailRequest(responseListener);
-        RequestQueue queue = Volley.newRequestQueue(RP_PayDetailActivity.this);
-        queue.add(paymentDetailRequest);
     }
 }
