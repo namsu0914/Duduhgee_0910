@@ -26,7 +26,7 @@ public class RP_SavePKRequest extends StringRequest {
     private static final String URL = "https://192.168.0.5:443/SavePK.php";
     private final Map<String, String> map;
 
-    public RP_SavePKRequest(String publicKey, String userID, Response.Listener<String> listener, Response.ErrorListener errorListener, Context context) throws CertificateException, IOException, KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
+    public RP_SavePKRequest(String publicKey, String signedChallenge,String userID, Response.Listener<String> listener, Response.ErrorListener errorListener, Context context) throws CertificateException, IOException, KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
         super(Method.POST, URL, listener, errorListener);
 
         SSLSocketFactory sslSocketFactory = getPinnedCertSslSocketFactory(context, R.raw.server);
@@ -41,6 +41,7 @@ public class RP_SavePKRequest extends StringRequest {
         map = new HashMap<>();
         map.put("userID", userID);
         map.put("publicKey", publicKey);
+        map.put("signedChallenge", signedChallenge);
     }
 
     @Override
@@ -48,4 +49,3 @@ public class RP_SavePKRequest extends StringRequest {
         return map;
     }
 }
-

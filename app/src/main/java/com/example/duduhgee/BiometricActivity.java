@@ -26,6 +26,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
+import com.example.asm.ASM_SignatureActivity;
 import com.example.asm.ASM_checkKeyPairExistence;
 import com.example.rp.RP_DeleteAccountRequest;
 import com.example.rp.RP_DeleteRequest;
@@ -70,6 +71,8 @@ public class BiometricActivity extends AppCompatActivity {
     private KeyStore keyStore;
     private PublicKey publicKey;
     private static final String TAG = "BiometricActivity";
+
+    public String challenge;
 
     @SuppressLint("MissingInflatedId")
     @TargetApi(Build.VERSION_CODES.P)
@@ -143,8 +146,19 @@ public class BiometricActivity extends AppCompatActivity {
                 if (start_authenticationIsClicked) {
                     ASM_checkKeyPairExistence checkkp = new ASM_checkKeyPairExistence();
                     boolean iskeyEX = checkkp.ASM_checkkeypairexistence(userID);
-                    // 공개키를 서버로 전송
-                    //RP_sendPublicKeyToServer(publicKey);
+
+                    ASM_SignatureActivity signatureActivity = new ASM_SignatureActivity();
+                    byte[] signedChallenge = signatureActivity.signChallenge(challenge, userID);
+
+                    if (signedChallenge != null) {
+                        // Method invocation was successful
+                        Log.d(TAG, "Signed Challenge: " + Base64.encodeToString(signedChallenge, Base64.NO_WRAP));
+
+                    } else {
+                        // Method invocation failed
+                        Log.e(TAG, "Failed to sign the challenge");
+                    }
+
                     try {
                         keyStore = KeyStore.getInstance("AndroidKeyStore");
                     } catch (KeyStoreException e) {
@@ -165,7 +179,9 @@ public class BiometricActivity extends AppCompatActivity {
                     publicKey = privateKeyEntry.getCertificate().getPublicKey();
                     if(iskeyEX){
                         try {
-                            RP_sendpublickeytoserver(publicKey, userID);
+
+                            RP_sendpublickeytoserver(publicKey, signedChallenge, userID);
+
                         } catch (CertificateException | IOException | KeyStoreException |
                                  NoSuchAlgorithmException | KeyManagementException e) {
                             throw new RuntimeException(e);
@@ -207,7 +223,7 @@ public class BiometricActivity extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(response);
                             String header = jsonObject.getString("Header");
                             String username = jsonObject.getString("Username");
-                            String challenge = jsonObject.getString("Challenge");
+                            challenge = jsonObject.getString("Challenge");
                             String policy = jsonObject.getString("Policy");
 
                             Log.d(TAG,"Header: "+header);
@@ -347,7 +363,7 @@ public class BiometricActivity extends AppCompatActivity {
     }
 
 
-    public void RP_sendpublickeytoserver(PublicKey publicKey, String userID) throws CertificateException, IOException, KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
+    public void RP_sendpublickeytoserver(PublicKey publicKey, byte[] signedChallenge, String userID) throws CertificateException, IOException, KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
 
 
         String publicKeyString = Base64.encodeToString(publicKey.getEncoded(), Base64.NO_WRAP);
@@ -376,7 +392,7 @@ public class BiometricActivity extends AppCompatActivity {
             }
         };
 
-        RP_SavePKRequest savePKRequest = new RP_SavePKRequest(publicKeyString, userID, responseListener, errorListener, BiometricActivity.this);
+        RP_SavePKRequest savePKRequest = new RP_SavePKRequest(publicKeyString, Base64.encodeToString(signedChallenge, Base64.NO_WRAP) ,userID, responseListener, errorListener, BiometricActivity.this);
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(savePKRequest);
     }
