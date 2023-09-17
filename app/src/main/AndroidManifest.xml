@@ -38,19 +38,19 @@
             android:name="com.example.asm.ASM_SignatureActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.rp.RP_BuyActivity"
+            android:name="com.example.duduhgee.BuyActivity"
             android:exported="false"/>
         <activity
             android:name="com.example.duduhgee.CardEnrollActivity"
             android:exported="false"/>
         <activity
-            android:name="com.example.rp.RP_Buy2Activity"
+            android:name="com.example.duduhgee.Buy2Activity"
             android:exported="false"/>
         <activity
-            android:name="com.example.rp.RP_BuySuccessActivity"
+            android:name="com.example.duduhgee.BuySuccessActivity"
             android:exported="false"/>
         <activity
-            android:name="com.example.rp.RP_PayDetailActivity"
+            android:name="com.example.duduhgee.PayDetailActivity"
             android:exported="false"/>
     </application>
 

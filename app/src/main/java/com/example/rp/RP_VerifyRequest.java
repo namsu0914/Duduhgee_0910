@@ -36,7 +36,6 @@ public class RP_VerifyRequest extends StringRequest {
         Log.d(TAG, "제품id: " + p_id);
         Log.d(TAG, "챌린지: " + message);
         Log.d(TAG, "서명  : " + signature);
-        //Log.d(TAG, "공개키: " + publicKey);
 
         SSLSocketFactory sslSocketFactory = getPinnedCertSslSocketFactory(context, R.raw.server);
         HttpsURLConnection.setDefaultSSLSocketFactory(sslSocketFactory);
