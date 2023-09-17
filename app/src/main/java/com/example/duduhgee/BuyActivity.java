@@ -1,4 +1,4 @@
-package com.example.rp;
+package com.example.duduhgee;
 
 import android.annotation.TargetApi;
 import android.app.KeyguardManager;
@@ -24,6 +24,9 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 import com.example.asm.ASM_SignatureActivity;
 import com.example.duduhgee.R;
+import com.example.rp.RP_BuyRequest;
+import com.example.rp.RP_SavePaymentRequest;
+import com.example.rp.RP_VerifyRequest;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,7 +41,7 @@ import java.security.PublicKey;
 import java.security.UnrecoverableEntryException;
 import java.security.cert.CertificateException;
 
-public class RP_BuyActivity extends AppCompatActivity {
+public class BuyActivity extends AppCompatActivity {
 
     private Button btn_buy;
     //private static final String KEY_NAME = userID;
@@ -47,7 +50,7 @@ public class RP_BuyActivity extends AppCompatActivity {
     private PublicKey publicKey;
     private BiometricPrompt.AuthenticationCallback authenticationCallback;
     private CancellationSignal cancellationSignal = null;
-    private static final String TAG = RP_BuyActivity.class.getSimpleName();
+    private static final String TAG = BuyActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,7 +134,7 @@ public class RP_BuyActivity extends AppCompatActivity {
                                     }
                                 };
                                 if (checkBiometricSupport()) {
-                                    BiometricPrompt biometricPrompt = new BiometricPrompt.Builder(RP_BuyActivity.this)
+                                    BiometricPrompt biometricPrompt = new BiometricPrompt.Builder(BuyActivity.this)
                                             .setTitle("지문 인증을 시작합니다")
                                             .setSubtitle("지문 인증 시작")
                                             .setDescription("지문")
@@ -156,12 +159,12 @@ public class RP_BuyActivity extends AppCompatActivity {
                 };
                 RP_BuyRequest buyRequest = null;
                 try {
-                    buyRequest = new RP_BuyRequest(userID, "1", responseListener, RP_BuyActivity.this);
+                    buyRequest = new RP_BuyRequest(userID, "1", responseListener, BuyActivity.this);
                 } catch (CertificateException | NoSuchAlgorithmException | KeyManagementException |
                          IOException | KeyStoreException e) {
                     throw new RuntimeException(e);
                 }
-                RequestQueue queue = Volley.newRequestQueue(RP_BuyActivity.this);
+                RequestQueue queue = Volley.newRequestQueue(BuyActivity.this);
                 queue.add(buyRequest);
             }
         });
@@ -184,7 +187,7 @@ public class RP_BuyActivity extends AppCompatActivity {
                     if (success) {
                         // 검증 성공
                         Toast.makeText(getApplicationContext(), "구매정보 저장되었습니다.", Toast.LENGTH_SHORT).show();
-                        Intent successIntent = new Intent(RP_BuyActivity.this, RP_BuySuccessActivity.class);
+                        Intent successIntent = new Intent(BuyActivity.this, BuySuccessActivity.class);
                         successIntent.putExtra("purchase_item", "tissue"); // 구매한 항목 정보 전달
                         startActivity(successIntent);
                         finish();
@@ -210,8 +213,8 @@ public class RP_BuyActivity extends AppCompatActivity {
                     if (success) {
                         // 검증 성공
                         Toast.makeText(getApplicationContext(), "서명이 확인되었습니다.", Toast.LENGTH_SHORT).show();
-                        RP_SavePaymentRequest savePaymentRequest = new RP_SavePaymentRequest(userID, "tissue", "1500", responseListener2, RP_BuyActivity.this);
-                        RequestQueue queue2 = Volley.newRequestQueue(RP_BuyActivity.this);
+                        RP_SavePaymentRequest savePaymentRequest = new RP_SavePaymentRequest(userID, "tissue", "1500", responseListener2, BuyActivity.this);
+                        RequestQueue queue2 = Volley.newRequestQueue(BuyActivity.this);
                         queue2.add(savePaymentRequest);
                     } else {
                         // 검증 실패
@@ -227,13 +230,13 @@ public class RP_BuyActivity extends AppCompatActivity {
             }
         };
 
-        RP_VerifyRequest verifyRequest = new RP_VerifyRequest(userID, "1", chall, Base64.encodeToString(signString, Base64.NO_WRAP), stringpublicKey, responseListener, RP_BuyActivity.this);
+        RP_VerifyRequest verifyRequest = new RP_VerifyRequest(userID, "1", chall, Base64.encodeToString(signString, Base64.NO_WRAP), stringpublicKey, responseListener, BuyActivity.this);
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(verifyRequest);
     }
 
     private void notifyUser(String message) {
-        Toast.makeText(RP_BuyActivity.this, message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(BuyActivity.this, message, Toast.LENGTH_SHORT).show();
     }
 
     private CancellationSignal getCancellationSignal() {

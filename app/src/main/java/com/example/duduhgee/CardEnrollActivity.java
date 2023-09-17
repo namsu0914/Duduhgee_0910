@@ -95,7 +95,7 @@ public class CardEnrollActivity extends AppCompatActivity {
                                 startActivity(intent);
                             } else {
                                 Toast.makeText(getApplicationContext(), "카드 등록에 실패하였습니다.", Toast.LENGTH_SHORT).show();
-                                return;
+
                             }
                         } catch (JSONException e) {
                             Toast.makeText(getApplicationContext(), "카드 등록 오류가 발생하였습니다.", Toast.LENGTH_SHORT).show();

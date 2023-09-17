@@ -1,4 +1,4 @@
-package com.example.rp;
+package com.example.duduhgee;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -13,7 +13,7 @@ import com.example.duduhgee.BiometricActivity;
 import com.example.duduhgee.MainActivity;
 import com.example.duduhgee.R;
 
-public class RP_BuySuccessActivity extends AppCompatActivity {
+public class BuySuccessActivity extends AppCompatActivity {
 
     private Button btn_info;
     private Button btn_home;
@@ -34,7 +34,7 @@ public class RP_BuySuccessActivity extends AppCompatActivity {
                 Intent intent = getIntent();
                 String userID = intent.getStringExtra("userID");
                 // 메인 액티비티로 이동하는 인텐트 생성
-                intent = new Intent(RP_BuySuccessActivity.this, MainActivity.class);
+                intent = new Intent(BuySuccessActivity.this, MainActivity.class);
                 intent.putExtra("userID", userID);
                 startActivity(intent);
                 finish(); // 현재 액티비티를 종료하여 이전 액티비티로 돌아갈 수 있도록 함
@@ -47,7 +47,7 @@ public class RP_BuySuccessActivity extends AppCompatActivity {
                 Intent intent = getIntent();
                 String userID = intent.getStringExtra("userID");
 
-                intent = new Intent(RP_BuySuccessActivity.this, BiometricActivity.class);
+                intent = new Intent(BuySuccessActivity.this, BiometricActivity.class);
                 intent.putExtra("userID", userID);
                 startActivity(intent);
             }
