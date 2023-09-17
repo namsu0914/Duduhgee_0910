@@ -25,7 +25,7 @@ import javax.net.ssl.SSLSocketFactory;
 
 public class RP_VerifyRequest extends StringRequest {
     private static final String TAG = "verify";
-    final static private String URL = "https://192.168.0.5:443/Verify.php";
+    final static private String URL = "https://192.168.0.5:443/RP_SERVER/Verify.php";
     private Map<String ,String> map;
 
 

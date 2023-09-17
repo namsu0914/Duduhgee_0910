@@ -18,8 +18,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import com.example.rp.RP_Buy2Activity;
-import com.example.rp.RP_BuyActivity;
+
 
 import java.io.IOException;
 import java.security.KeyStore;
@@ -66,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = getIntent();
                 String userID = intent.getStringExtra("userID");
 
-                intent = new Intent(MainActivity.this, RP_BuyActivity.class);
+                intent = new Intent(MainActivity.this, BuyActivity.class);
                 intent.putExtra("userID", userID);
                 startActivity(intent);
             }
@@ -79,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = getIntent();
                 String userID = intent.getStringExtra("userID");
 
-                intent = new Intent(MainActivity.this, RP_Buy2Activity.class);
+                intent = new Intent(MainActivity.this, Buy2Activity.class);
                 intent.putExtra("userID", userID);
                 startActivity(intent);
             }

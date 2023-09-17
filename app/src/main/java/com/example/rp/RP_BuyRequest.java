@@ -25,7 +25,7 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocketFactory;
 
 public class RP_BuyRequest extends StringRequest {
-    final static private String URL = "https://192.168.0.5:443/FIDOBuyRequest.php";
+    final static private String URL = "https://192.168.0.5:443/RP_SERVER/FIDOBuyRequest.php";
 
     private Map<String ,String> map;
 

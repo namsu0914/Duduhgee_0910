@@ -24,7 +24,7 @@ import javax.net.ssl.SSLSocketFactory;
 
 public class RP_LoginRequest extends StringRequest {
     //서버 URL 설정(php파일 연동)
-    final static private String URL = "https://192.168.0.5:443/RP_Login.php";
+    final static private String URL = "https://192.168.0.5:443/RP_SERVER/RP_Login.php";
     private Map<String ,String >map;
 
     public RP_LoginRequest(String userID, String userPassword, Response.Listener<String> listener, Context context) throws CertificateException, IOException, KeyStoreException, NoSuchAlgorithmException, KeyManagementException {

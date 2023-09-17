@@ -23,7 +23,7 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocketFactory;
 
 public class RP_DeleteRequest extends StringRequest {
-    final static private String URL = "https://192.168.0.5:443/DeleteBiometric.php";
+    final static private String URL = "https://192.168.0.5:443/RP_SERVER/DeleteBiometric.php";
     private final Map<String, String> map;
 
 
