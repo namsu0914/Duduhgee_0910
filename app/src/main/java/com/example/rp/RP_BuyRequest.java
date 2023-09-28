@@ -1,8 +1,10 @@
 package com.example.rp;
 
+import static android.content.ContentValues.TAG;
 import static com.example.rp.RP_RegisterRequest.getPinnedCertSslSocketFactory;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -41,15 +43,16 @@ public class RP_BuyRequest extends StringRequest {
             }
         });
 
-        map= new HashMap<>();
+        map = new HashMap<>();
         map.put("userID",userID);
+        Log.d(TAG, "userID : "+ userID);
         map.put("p_id", p_id);
+        Log.d(TAG, "p_id : "+ p_id);
     }
-
     @Nullable
     @Override
     protected Map<String, String> getParams() throws AuthFailureError {
+
         return map;
     }
-
 }

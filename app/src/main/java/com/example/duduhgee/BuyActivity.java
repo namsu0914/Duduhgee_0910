@@ -44,9 +44,6 @@ import java.security.cert.CertificateException;
 public class BuyActivity extends AppCompatActivity {
 
     private Button btn_buy;
-    //private static final String KEY_NAME = userID;
-    private KeyStore keyStore;
-    private PrivateKey privateKey;
     private PublicKey publicKey;
     private BiometricPrompt.AuthenticationCallback authenticationCallback;
     private CancellationSignal cancellationSignal = null;
@@ -63,9 +60,6 @@ public class BuyActivity extends AppCompatActivity {
         btn_buy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) throws RuntimeException {
-                Intent intent = getIntent();
-                String userID = intent.getStringExtra("userID");
-                String p_id = "1";
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
@@ -109,6 +103,8 @@ public class BuyActivity extends AppCompatActivity {
                                     public void onAuthenticationSucceeded(BiometricPrompt.AuthenticationResult result) {
                                         super.onAuthenticationSucceeded(result);
                                         notifyUser("인증에 성공하였습니다");
+                                        Intent intent = getIntent();
+                                        String userID = intent.getStringExtra("userID");
 
                                         ASM_SignatureActivity signatureActivity = new ASM_SignatureActivity();
                                         byte[] signedChallenge = signatureActivity.signChallenge(snString, userID);
@@ -159,6 +155,8 @@ public class BuyActivity extends AppCompatActivity {
                 };
                 RP_BuyRequest buyRequest = null;
                 try {
+                    Intent intent = getIntent();
+                    String userID = intent.getStringExtra("userID");
                     buyRequest = new RP_BuyRequest(userID, "1", responseListener, BuyActivity.this);
                 } catch (CertificateException | NoSuchAlgorithmException | KeyManagementException |
                          IOException | KeyStoreException e) {
@@ -189,6 +187,7 @@ public class BuyActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "구매정보 저장되었습니다.", Toast.LENGTH_SHORT).show();
                         Intent successIntent = new Intent(BuyActivity.this, BuySuccessActivity.class);
                         successIntent.putExtra("purchase_item", "tissue"); // 구매한 항목 정보 전달
+                        successIntent.putExtra("userID", userID);
                         startActivity(successIntent);
                         finish();
                     } else {
@@ -229,7 +228,7 @@ public class BuyActivity extends AppCompatActivity {
                 }
             }
         };
-
+        String p_id = "1";
         RP_VerifyRequest verifyRequest = new RP_VerifyRequest(userID, "1", chall, Base64.encodeToString(signString, Base64.NO_WRAP), stringpublicKey, responseListener, BuyActivity.this);
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(verifyRequest);

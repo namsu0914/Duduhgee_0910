@@ -36,7 +36,6 @@ import java.security.KeyManagementException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.UnrecoverableEntryException;
 import java.security.cert.CertificateException;
@@ -44,9 +43,7 @@ import java.security.cert.CertificateException;
 public class Buy2Activity extends AppCompatActivity {
 
     private Button btn_buy;
-    //private static final String KEY_NAME = userID;
-    private KeyStore keyStore;
-    private PrivateKey privateKey;
+
     private PublicKey publicKey;
     private BiometricPrompt.AuthenticationCallback authenticationCallback;
     private CancellationSignal cancellationSignal = null;
@@ -65,7 +62,6 @@ public class Buy2Activity extends AppCompatActivity {
             public void onClick(View view) throws RuntimeException {
                 Intent intent = getIntent();
                 String userID = intent.getStringExtra("userID");
-                String p_id = "1";
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
@@ -159,7 +155,7 @@ public class Buy2Activity extends AppCompatActivity {
                 };
                 RP_BuyRequest buyRequest = null;
                 try {
-                    buyRequest = new RP_BuyRequest(userID, "1", responseListener, Buy2Activity.this);
+                    buyRequest = new RP_BuyRequest(userID, "2", responseListener, Buy2Activity.this);
                 } catch (CertificateException | NoSuchAlgorithmException | KeyManagementException |
                          IOException | KeyStoreException e) {
                     throw new RuntimeException(e);
@@ -189,6 +185,7 @@ public class Buy2Activity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "구매정보 저장되었습니다.", Toast.LENGTH_SHORT).show();
                         Intent successIntent = new Intent(Buy2Activity.this, BuySuccessActivity.class);
                         successIntent.putExtra("purchase_item", "toothbrush"); // 구매한 항목 정보 전달
+                        successIntent.putExtra("userID", userID);
                         startActivity(successIntent);
                         finish();
                     } else {
@@ -213,7 +210,7 @@ public class Buy2Activity extends AppCompatActivity {
                     if (success) {
                         // 검증 성공
                         Toast.makeText(getApplicationContext(), "서명이 확인되었습니다.", Toast.LENGTH_SHORT).show();
-                        RP_SavePaymentRequest savePaymentRequest = new RP_SavePaymentRequest(userID, "tissue", "1500", responseListener2, Buy2Activity.this);
+                        RP_SavePaymentRequest savePaymentRequest = new RP_SavePaymentRequest(userID, "toothbrush", "1000", responseListener2, Buy2Activity.this);
                         RequestQueue queue2 = Volley.newRequestQueue(Buy2Activity.this);
                         queue2.add(savePaymentRequest);
                     } else {
@@ -229,8 +226,8 @@ public class Buy2Activity extends AppCompatActivity {
                 }
             }
         };
-
-        RP_VerifyRequest verifyRequest = new RP_VerifyRequest(userID, "1", chall, Base64.encodeToString(signString, Base64.NO_WRAP), stringpublicKey, responseListener, Buy2Activity.this);
+        String p_id = "2";
+        RP_VerifyRequest verifyRequest = new RP_VerifyRequest(userID, "2", chall, Base64.encodeToString(signString, Base64.NO_WRAP), stringpublicKey, responseListener, Buy2Activity.this);
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(verifyRequest);
     }

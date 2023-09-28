@@ -1,17 +1,16 @@
 package com.example.duduhgee;
 
+import static android.content.ContentValues.TAG;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.duduhgee.BiometricActivity;
-import com.example.duduhgee.MainActivity;
-import com.example.duduhgee.R;
 
 public class BuySuccessActivity extends AppCompatActivity {
 
@@ -33,6 +32,7 @@ public class BuySuccessActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = getIntent();
                 String userID = intent.getStringExtra("userID");
+                Log.d(TAG, "userID: "+userID);
                 // 메인 액티비티로 이동하는 인텐트 생성
                 intent = new Intent(BuySuccessActivity.this, MainActivity.class);
                 intent.putExtra("userID", userID);

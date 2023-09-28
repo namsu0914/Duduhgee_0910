@@ -35,11 +35,6 @@ public class MainActivity extends AppCompatActivity {
 
     private Button btn_home;
 
-    //private static final String KEY_NAME = userID;
-    private KeyStore keyStore;
-    private PrivateKey privateKey;
-    private PublicKey publicKey;
-    private BiometricPrompt.AuthenticationCallback authenticationCallback;
     private CancellationSignal cancellationSignal = null;
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -55,8 +50,8 @@ public class MainActivity extends AppCompatActivity {
 
         ImageView imageViewClickable = findViewById(R.id.imageViewClickable);
         ImageView imageViewClickable2 = findViewById(R.id.imageViewClickable2);
-        Intent intent = getIntent();
-        String userID = intent.getStringExtra("userID");
+//        Intent intent = getIntent();
+//        String userID = intent.getStringExtra("userID");
 
         imageViewClickable.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,7 +105,8 @@ public class MainActivity extends AppCompatActivity {
                 finish(); // 현재 액티비티를 종료하여 이전 액티비티로 돌아갈 수 있도록 함
             }
         });
-
+        Intent intent = getIntent();
+        String userID = intent.getStringExtra("userID");
         tv_id.setText(userID);
     }
 

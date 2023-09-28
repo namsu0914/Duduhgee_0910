@@ -1,8 +1,10 @@
 package com.example.rp;
 
+import static android.content.ContentValues.TAG;
 import static com.example.rp.RP_RegisterRequest.getPinnedCertSslSocketFactory;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
@@ -38,10 +40,10 @@ public class RP_SavePaymentRequest extends StringRequest{
             }
         });
 
-
         map= new HashMap<>();
         map.put("userID", userID);
         map.put("product",product);
+        Log.d(TAG, "RP_SavePaymentRequest: " + product);
         map.put("unitPrice",unitPrice);
 
     }
