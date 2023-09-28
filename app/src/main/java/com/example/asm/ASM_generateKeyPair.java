@@ -47,8 +47,6 @@ public class ASM_generateKeyPair extends AppCompatActivity {
                 PrivateKey privateKey = privateKeyEntry.getPrivateKey();
 
                 // 공개키를 서버로 전송
-                //RP_sendPublicKeyToServer sendpk = new RP_sendPublicKeyToServer();
-                //sendpk.RP_sendpublickeytoserver(publicKey, userID);
                 Log.d(TAG, "공개키: " + Base64.encodeToString(publicKey.getEncoded(), Base64.NO_WRAP));
             } else {
                 // 키 쌍이 이미 존재함
