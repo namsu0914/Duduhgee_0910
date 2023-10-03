@@ -105,10 +105,6 @@ public class BuyActivity extends AppCompatActivity {
                     queue.add(checkCardRequest);
                 }else{
                     doesntExistBioDialog();
-                    //notifyUser("생체 인증 구매가 비활성화 되어 있습니다. 생체정보를 등록해주세요.");
-//                    intent = new Intent(BuyActivity.this, BiometricActivity.class);
-//                    intent.putExtra("userID", userID);
-//                    startActivity(intent);
                 }
 
             }
@@ -123,13 +119,13 @@ public class BuyActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(response);
 
                     if (jsonObject.has("Challenge")) {
-                        String header = jsonObject.getString("Header");
+                        //String header = jsonObject.getString("Header");
                         String username = jsonObject.getString("Username");
                         String challenge = jsonObject.getString("Challenge");
                         String policy = jsonObject.getString("Policy");
                         String transaction = jsonObject.getString("Transaction");
 
-                        Log.d(TAG,"Header: "+header);
+                        //Log.d(TAG,"Header: "+header);
                         Log.d(TAG,"Username: "+username);
                         Log.d(TAG,"Challenge: "+challenge);
                         Log.d(TAG,"Policy: "+policy);

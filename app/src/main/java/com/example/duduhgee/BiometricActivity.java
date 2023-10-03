@@ -180,17 +180,15 @@ public class BiometricActivity extends AppCompatActivity {
                         publicKey = privateKeyEntry.getCertificate().getPublicKey();
                         if(iskeyEX){
                             try {
-
                                 RP_sendpublickeytoserver(publicKey, signedChallenge, userID);
-
                             } catch (CertificateException | IOException | KeyStoreException |
                                      NoSuchAlgorithmException | KeyManagementException e) {
                                 throw new RuntimeException(e);
                             }
                         }
-
+                        Toast.makeText(BiometricActivity.this, "생체 인증 서비스를 이용할 수 있습니다", Toast.LENGTH_SHORT).show();
                     }else{
-                     notifyUser("이미 등록하셨습니다..^^");
+                        notifyUser("이미 등록하셨습니다..^^");
                     }
                 } else if (delete_bioIsClicked) {
                     try {
@@ -225,12 +223,12 @@ public class BiometricActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            String header = jsonObject.getString("Header");
+                            //String header = jsonObject.getString("Header");
                             String username = jsonObject.getString("Username");
                             challenge = jsonObject.getString("Challenge");
                             String policy = jsonObject.getString("Policy");
 
-                            Log.d(TAG,"Header: "+header);
+                            //Log.d(TAG,"Header: "+header);
                             Log.d(TAG,"Username: "+username);
                             Log.d(TAG,"Challenge: "+challenge);
                             Log.d(TAG,"Policy: "+policy);

@@ -125,13 +125,13 @@ public class Buy2Activity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(response);
 
                     if (jsonObject.has("Challenge")) {
-                        String header = jsonObject.getString("Header");
+                        //String header = jsonObject.getString("Header");
                         String username = jsonObject.getString("Username");
                         String challenge = jsonObject.getString("Challenge");
                         String policy = jsonObject.getString("Policy");
                         String transaction = jsonObject.getString("Transaction");
 
-                        Log.d(TAG,"Header: "+header);
+                        //Log.d(TAG,"Header: "+header);
                         Log.d(TAG,"Username: "+username);
                         Log.d(TAG,"Challenge: "+challenge);
                         Log.d(TAG,"Policy: "+policy);

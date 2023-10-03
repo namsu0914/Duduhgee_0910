@@ -8,6 +8,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.duduhgee.BuyActivity;
+
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.KeyPair;
@@ -48,13 +50,14 @@ public class ASM_generateKeyPair extends AppCompatActivity {
 
                 // 공개키를 서버로 전송
                 Log.d(TAG, "공개키: " + Base64.encodeToString(publicKey.getEncoded(), Base64.NO_WRAP));
+
             } else {
                 // 키 쌍이 이미 존재함
                 KeyStore.PrivateKeyEntry privateKeyEntry = (KeyStore.PrivateKeyEntry) keyStore.getEntry(userID, null);
                 publicKey = privateKeyEntry.getCertificate().getPublicKey();
                 // 공개 키와 개인 키 출력
                 Log.d(TAG, "Public Key: " + Base64.encodeToString(publicKey.getEncoded(), Base64.NO_WRAP));
-                Toast.makeText(getApplicationContext(), "이미 저장된 생체정보입니다. ", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "이미 저장된 생체정보입니다. ", Toast.LENGTH_SHORT).show();
             }
         } catch (NoSuchAlgorithmException | NoSuchProviderException |
                  InvalidAlgorithmParameterException | KeyStoreException | CertificateException |
